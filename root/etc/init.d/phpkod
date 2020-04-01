@@ -2,11 +2,11 @@
 # Copyright (C) 2018-2020 Lienol <lawlienol@gmail.com>
 
 START=99
+STOP=01
 
 CONFIG="phpkod"
-
 KOD_NGINX_CONFIG="/etc/nginx/conf.d/kodexplorer.conf"
-
+storage_device_path=$(uci get $CONFIG.@global[0].storage_device_path)
 
 gen_nginx_config() {
 	port=$(uci get $CONFIG.@global[0].port)
@@ -18,11 +18,9 @@ sed -i "s?listen .*?listen $port;?g" $KOD_NGINX_CONFIG
 [ $kodomain ] && {
 	sed -i "s?server_name .*?server_name $kodomain;?g" $KOD_NGINX_CONFIG
 	}
-
 }
 
 gen_php_config() {
-	storage_device_path=$(uci get $CONFIG.@global[0].storage_device_path)
 	memory_limit=$(uci get $CONFIG.@global[0].memory_limit)
 	upload_max_filesize=$(uci get $CONFIG.@global[0].upload_max_filesize)
 
@@ -38,19 +36,21 @@ gen_php_config() {
 start() {
 	ENABLED=$(uci get $CONFIG.@global[0].enable)
 	[ "$ENABLED" = "0" ] && return 0
-	sed -i "s/DATA_PATH.*/DATA_PATH', '\/$storage_device_path\/kodata\/');/g" /www/kod/config/define.php
+	sed -i "s?DATA_PATH.*?DATA_PATH', '$storage_device_path/kodata/');?g" /www/kod/config/define.php
 	[ ! -d "$storage_device_path/kodata" ] && {
 	cp -R /www/kod/data $storage_device_path/kodata
 	}
 	gen_php_config
 	/etc/init.d/php7-fpm start
 	gen_nginx_config
-	/etc/init.d/nginx start
+	/etc/init.d/nginx reload
 }
 
 stop() {
 	/etc/init.d/php7-fpm stop
+	[ "`pgrep php-fpm`" ] && {
 	killall -9 php-fpm
+	}
 }
 
 restart() {
