@@ -4,6 +4,9 @@ msgstr "PHP && 可道云"
 msgid "Start PHP"
 msgstr "启动PHP服务"
 
+msgid "Enable PHP"
+msgstr "启用PHP服务"
+
 msgid "Stop PHP"
 msgstr "终止PHP服务"
 
