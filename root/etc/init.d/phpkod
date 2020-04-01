@@ -50,6 +50,7 @@ start() {
 
 stop() {
 	/etc/init.d/php7-fpm stop
+	killall -9 php-fpm
 }
 
 restart() {
