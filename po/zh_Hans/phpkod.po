@@ -5,7 +5,7 @@ msgid "Start PHP"
 msgstr "启动PHP服务"
 
 msgid "Enable PHP"
-msgstr "启用PHP服务"
+msgstr "启用PHP&&KodExplorer"
 
 msgid "Stop PHP"
 msgstr "终止PHP服务"
