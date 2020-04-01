@@ -1,0 +1,58 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2018-2020 Lienol <lawlienol@gmail.com>
+
+START=99
+
+CONFIG="phpkod"
+
+KOD_NGINX_CONFIG="/etc/nginx/conf.d/kodexplorer.conf"
+
+
+gen_nginx_config() {
+	port=$(uci get $CONFIG.@global[0].port)
+	kodomain=$(uci get $CONFIG.@global[0].kodomain)
+	[ ! -f $KOD_NGINX_CONFIG ] && {
+	touch $KOD_NGINX_CONFIG
+	}
+sed -i "s?listen .*?listen $port;?g" $KOD_NGINX_CONFIG
+[ $kodomain ] && {
+	sed -i "s?server_name .*?server_name $kodomain;?g" $KOD_NGINX_CONFIG
+	}
+
+}
+
+gen_php_config() {
+	storage_device_path=$(uci get $CONFIG.@global[0].storage_device_path)
+	memory_limit=$(uci get $CONFIG.@global[0].memory_limit)
+	upload_max_filesize=$(uci get $CONFIG.@global[0].upload_max_filesize)
+
+	sed -i "s/memory_limit.*/memory_limit = $memory_limit/g" /etc/php.ini
+	sed -i "s/post_max_size.*/post_max_size = $upload_max_filesize/g" /etc/php.ini
+	sed -i "s/upload_max_filesize.*/upload_max_filesize = $upload_max_filesize/g" /etc/php.ini
+	sed -i "s/client_max_body_size.*/client_max_body_size $upload_max_filesize;/g" /etc/nginx/nginx.conf
+	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" $KOD_NGINX_CONFIG
+	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" /etc/nginx/conf.d/_lan.conf
+	sed -i "s/user =.*/user = root/g" /etc/php7-fpm.d/www.conf
+}
+
+start() {
+	ENABLED=$(uci get $CONFIG.@global[0].enable)
+	[ "$ENABLED" = "0" ] && return 0
+	sed -i "s/DATA_PATH.*/DATA_PATH', '\/$storage_device_path\/kodata\/');/g" /www/kod/config/define.php
+	[ ! -d "$storage_device_path/kodata" ] && {
+	cp -R /www/kod/data $storage_device_path/kodata
+	}
+	gen_php_config
+	/etc/init.d/php7-fpm start
+	gen_nginx_config
+	/etc/init.d/nginx start
+}
+
+stop() {
+	/etc/init.d/php7-fpm stop
+}
+
+restart() {
+	stop
+	start
+}

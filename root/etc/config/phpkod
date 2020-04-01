@@ -1,0 +1,9 @@
+
+config global
+	option port '8081'
+	option memory_limit '100M'
+	option upload_max_filesize '200M'
+	option storage_device_path '/www/'
+	option kodomain ''
+	option enable '0'
+
