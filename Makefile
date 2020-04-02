@@ -7,7 +7,7 @@ PKG_RELEASE:=20200331
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/kalcaddle/KodExplorer.git
 PKG_SOURCE_VERSION:=latest
-PKG_MAINTAINER:=GaryPang <https://github.com/garypang13/luci-app-php-kodexplorer>
+PKG_MAINTAINER:=GaryPang <https://github.com/garypang13/luci-app-php-kodexplorer> Lienol <lawlienol@gmail.com>
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
