@@ -6,11 +6,11 @@ STOP=01
 
 CONFIG="phpkod"
 KOD_NGINX_CONFIG="/etc/nginx/conf.d/kodexplorer.conf"
-storage_device_path=$(uci get $CONFIG.@global[0].storage_device_path)
+storage_device_path=$(uci -q get $CONFIG.main.storage_device_path)
 
 gen_nginx_config() {
-	port=$(uci get $CONFIG.@global[0].port)
-	kodomain=$(uci get $CONFIG.@global[0].kodomain)
+	port=$(uci -q get $CONFIG.main.port)
+	kodomain=$(uci -q get $CONFIG.main.kodomain)
 	[ ! -f $KOD_NGINX_CONFIG ] && {
 	touch $KOD_NGINX_CONFIG
 	}
@@ -21,12 +21,13 @@ sed -i "s?listen .*?listen $port;?g" $KOD_NGINX_CONFIG
 }
 
 gen_php_config() {
-	memory_limit=$(uci get $CONFIG.@global[0].memory_limit)
-	upload_max_filesize=$(uci get $CONFIG.@global[0].upload_max_filesize)
+	memory_limit=$(uci -q get $CONFIG.main.memory_limit)
+	upload_max_filesize=$(uci -q get $CONFIG.main.upload_max_filesize)
 
 	sed -i "s/memory_limit.*/memory_limit = $memory_limit/g" /etc/php.ini
 	sed -i "s/post_max_size.*/post_max_size = $upload_max_filesize/g" /etc/php.ini
 	sed -i "s/upload_max_filesize.*/upload_max_filesize = $upload_max_filesize/g" /etc/php.ini
+	sed -i "s/doc_root /;doc_root /g" /etc/php.ini
 	sed -i "s/client_max_body_size.*/client_max_body_size $upload_max_filesize;/g" /etc/nginx/nginx.conf
 	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" $KOD_NGINX_CONFIG
 	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" /etc/nginx/conf.d/_lan.conf
@@ -34,7 +35,7 @@ gen_php_config() {
 }
 
 start() {
-	ENABLED=$(uci get $CONFIG.@global[0].enable)
+	ENABLED=$(uci -q get $CONFIG.main.enable)
 	[ "$ENABLED" = "0" ] && return 0
 	sed -i "s?DATA_PATH.*?DATA_PATH', '$storage_device_path/kodata/');?g" /www/kod/config/define.php
 	[ ! -d "$storage_device_path/kodata" ] && {

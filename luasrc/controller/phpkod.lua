@@ -2,7 +2,7 @@
 module("luci.controller.phpkod", package.seeall)
 
 local http = require "luci.http"
-
+local uci=require"luci.model.uci".cursor()
 function index()
     if not nixio.fs.access("/etc/config/phpkod") then return end
 
@@ -17,7 +17,9 @@ function get_pid(from_lua)
     local nginx_stat = luci.sys.call("pgrep nginx >/dev/null")==0
 	local status = {
 		php_stat = php_stat,
-		nginx_stat = nginx_stat
+		nginx_stat = nginx_stat,
+		kodport=uci:get("phpkod","main","port"),
+		kodomain=uci:get("phpkod","main","kodomain")
 	}
 	if from_lua then
 		return php_stat

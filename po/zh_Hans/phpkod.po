@@ -16,6 +16,9 @@ msgstr "绑定域名"
 msgid "KodExplorer"
 msgstr "可道云"
 
+msgid "Open KodExplorer"
+msgstr "打开管理界面"
+
 msgid "Global Settings"
 msgstr "全局设置"
 
