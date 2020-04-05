@@ -10,6 +10,9 @@ width:8rem !important;
 .kodstatus .cbi-value-field{
 line-height:inherit !important;
 }
+#kodwebui{
+margin-left:30px;
+}
 </style>
 <fieldset class="cbi-section kodstatus">
 	<legend><%:Running Status%></legend>
@@ -22,10 +25,10 @@ line-height:inherit !important;
 			<label class="cbi-value-title">PHP <%:Status%></label>
 			<div class="cbi-value-field" id="_php_status"><%:Collecting data...%></div>
 		</div>
-
-	</fieldset>
 		<div id="kodwebui" style="margin-left:20px;">
 	</div>
+	</fieldset>
+
 <!-- 	<p id="php_startstop">
 		<em><%:Collecting data...%></em>
 	</p> -->
@@ -44,13 +47,10 @@ line-height:inherit !important;
 			window.kodomain = data.kodomain
 				if (php_status){
 					php_status.innerHTML = data.php_stat ? '<font color="green"><%:RUNNING%>' : '<font color="red"><%:NOT RUNNING%> X</font>';
-					var links = '<input class="cbi-button mar-10" type="button" value="<%:Open KodExplorer%>" onclick="openWebUI();" />';
-					kodbtn.innerHTML = links;
 				}
-				else{
-				alert("aa");
-					kodbtn.innerHTML = ""
-					}
+				var links = '<input class="cbi-button mar-10" type="button" value="<%:Open KodExplorer%>" onclick="openWebUI();" />';
+					kodbtn.innerHTML = data.php_stat ? links : ""
+					
 				if (nginx_status){
 					nginx_status.innerHTML = data.nginx_stat ? '<font color="green"><%:RUNNING%>' : '<font color="red"><%:NOT RUNNING%> X</font>';
 				}
