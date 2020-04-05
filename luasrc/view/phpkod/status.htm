@@ -65,7 +65,7 @@ function openWebUI() {
 	var localhostPath = curWwwPath.substring(0, pos);
 	var kodport = window.kodport ? window.kodport : 80;
 	var kodomain = window.kodomain ? window.kodomain : localhostPath.substring(window.location.protocol.length);	
-	var url = "http://" + kodomain + ":" + kodport;
+	var url = window.location.protocol + "//" + kodomain + ":" + kodport;
 	window.open(url)
 };
 //]]></script>
