@@ -17,7 +17,7 @@ o.rmempty = false
 
 o = s:option(Value, "kodomain", translate("KodExplorer Bind Domain"))
 o.placeholder = "kod.xx.com"
-o.rmempty = false
+o.rmempty = true
 
 o = s:option(Value, "memory_limit", translate("Maximum memory usage"),
              translate(
