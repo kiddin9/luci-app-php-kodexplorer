@@ -1,6 +1,9 @@
 msgid "PHP && KodExplorer"
 msgstr "PHP && 可道云"
 
+msgid "PHP-KodExplorer"
+msgstr "PHP && 可道云"
+
 msgid "Start PHP"
 msgstr "启动PHP服务"
 
