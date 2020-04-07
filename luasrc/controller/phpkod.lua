@@ -7,7 +7,7 @@ function index()
     if not nixio.fs.access("/etc/config/phpkod") then return end
 
     entry({"admin", "nas", "phpkod"}, cbi("phpkod"),
-          _("PHP-KodExplorer"), firstchild()).dependent = true
+	_("PHP-KodExplorer"),1).dependent = true
     entry({"admin", "nas", "phpkod", "status"}, call("get_pid")).leaf = true
     entry( {"admin", "nas", "phpkod", "startstop"}, post("startstop") ).leaf = true
 end
