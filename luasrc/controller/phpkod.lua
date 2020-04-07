@@ -6,10 +6,7 @@ local uci=require"luci.model.uci".cursor()
 function index()
     if not nixio.fs.access("/etc/config/phpkod") then return end
 
-    entry({"admin", "nas", "phpkod"}, firstchild(),
-	_("PHP-KodExplorer"), 1)
-    entry({"admin", "nas", "phpkod"}, cbi("phpkod"),
-	_("PHP-KodExplorer"), 1)
+    entry({"admin", "nas", "phpkod"}, cbi("phpkod"), _("PHP-KodExplorer"), 1)
     entry({"admin", "nas", "phpkod", "status"}, call("get_pid")).leaf = true
     entry( {"admin", "nas", "phpkod", "startstop"}, post("startstop") ).leaf = true
 end
