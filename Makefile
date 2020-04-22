@@ -18,7 +18,7 @@ define Package/luci-app-php-kodexplorer
 	TITLE:=LuCI for PHP and KodExplorer
 	PKG_MAINTAINER:=GaryPang
 	PKGARCH:=all
-	DEPENDS:=+php7 +php7-fpm +php7-mod-curl +php7-mod-gd +php7-mod-iconv +php7-mod-json +php7-mod-mbstring +php7-mod-opcache +php7-mod-session +php7-mod-zip +php7-mod-sqlite3 +php7-mod-openssl @(nginx||nginx-ssl)
+	DEPENDS:=+luci-ssl-nginx +php7 +php7-fpm +php7-mod-curl +php7-mod-gd +php7-mod-iconv +php7-mod-json +php7-mod-mbstring +php7-mod-opcache +php7-mod-session +php7-mod-zip +php7-mod-sqlite3 +php7-mod-openssl
 endef
 
 define Package/luci-app-php-kodexplorer/extra_provides
