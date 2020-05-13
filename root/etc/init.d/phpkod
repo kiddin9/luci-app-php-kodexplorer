@@ -27,10 +27,8 @@ gen_php_config() {
 	sed -i "s/memory_limit.*/memory_limit = $memory_limit/g" /etc/php.ini
 	sed -i "s/post_max_size.*/post_max_size = $upload_max_filesize/g" /etc/php.ini
 	sed -i "s/upload_max_filesize.*/upload_max_filesize = $upload_max_filesize/g" /etc/php.ini
-	sed -i "s/^doc_root /;doc_root /g" /etc/php.ini
 	sed -i "s/client_max_body_size.*/client_max_body_size $upload_max_filesize;/g" $KOD_NGINX_CONFIG
 	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" $KOD_NGINX_CONFIG
-	sed -i "s/user =.*/user = root/g" /etc/php7-fpm.d/www.conf
 }
 
 start() {
