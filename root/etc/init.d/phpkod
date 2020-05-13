@@ -24,9 +24,9 @@ gen_php_config() {
 	memory_limit=$(uci -q get $CONFIG.main.memory_limit)
 	upload_max_filesize=$(uci -q get $CONFIG.main.upload_max_filesize)
 
-	sed -i "s/memory_limit.*/memory_limit = $memory_limit/g" /etc/php.ini
-	sed -i "s/post_max_size.*/post_max_size = $upload_max_filesize/g" /etc/php.ini
-	sed -i "s/upload_max_filesize.*/upload_max_filesize = $upload_max_filesize/g" /etc/php.ini
+	sed -i "s/memory_limit.*/memory_limit = $memory_limit/g" /etc/php7/custom.ini
+	sed -i "s/post_max_size.*/post_max_size = $upload_max_filesize/g" /etc/php7/custom.ini
+	sed -i "s/upload_max_filesize.*/upload_max_filesize = $upload_max_filesize/g" /etc/php7/custom.ini
 	sed -i "s/client_max_body_size.*/client_max_body_size $upload_max_filesize;/g" $KOD_NGINX_CONFIG
 	sed -i "s?open_basedir=.document?open_basedir=$storage_device_path:\$document?g" $KOD_NGINX_CONFIG
 }
