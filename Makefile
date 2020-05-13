@@ -44,7 +44,7 @@ define Package/luci-app-php-kodexplorer/install
 	$(CP) \
 		$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/{app,config,data,plugins,static} \
 		$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/index.php \
-		$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/ChangeLog.md \
+		$(PKG_BUILD_DIR)/ChangeLog.md \
 		$(1)/www/kod
 endef
 
