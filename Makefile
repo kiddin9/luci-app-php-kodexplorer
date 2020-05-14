@@ -13,9 +13,8 @@ PKG_MAINTAINER:=GaryPang <https://github.com/garypang13/luci-app-php-kodexplorer
 include $(TOPDIR)/feeds/luci/luci.mk
 
 define Package/luci-app-php-kodexplorer
-	SECTION:=luci
-	CATEGORY:=LuCI
-	SUBMENU:=3. Applications
+	SECTION:=net
+	CATEGORY:=Network
 	TITLE:=LuCI for PHP and KodExplorer
 	PKG_MAINTAINER:=GaryPang
 	PKGARCH:=all
