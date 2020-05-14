@@ -22,13 +22,6 @@ define Package/luci-app-php-kodexplorer
 	DEPENDS:=+luci-ssl-nginx +php7 +php7-fpm +php7-mod-curl +php7-mod-gd +php7-mod-iconv +php7-mod-json +php7-mod-mbstring +php7-mod-opcache +php7-mod-session +php7-mod-zip +php7-mod-sqlite3 +php7-mod-openssl
 endef
 
-define Package/luci-app-php-kodexplorer/extra_provides
-    echo 'libstdc++.so.6'; \
-    echo 'libpthread.so.0'; \
-    echo 'libm.so.6'; \
-    echo 'libc.so.6';
-endef
-
 define Build/Compile
 endef
 
@@ -42,8 +35,8 @@ define Package/luci-app-php-kodexplorer/install
 	
 	$(INSTALL_DIR) $(1)/www/kod
 	$(CP) \
-		$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/{app,config,data,plugins,static} \
-		$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/index.php \
+		$(PKG_BUILD_DIR)/{app,config,data,plugins,static} \
+		$(PKG_BUILD_DIR)/index.php \
 		$(PKG_BUILD_DIR)/ChangeLog.md \
 		$(1)/www/kod
 endef
